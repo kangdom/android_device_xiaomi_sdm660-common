@@ -13,4 +13,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Enable Manual Sim Provisioning -->
     <bool name="config_enableManualSubProvisioning">true</bool>
+
+    <!-- Whether hardware revision should be shown or not. -->
+    <bool name="config_show_hardware_revision">false</bool>
 </resources>
