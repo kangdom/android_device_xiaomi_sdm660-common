@@ -1236,4 +1236,7 @@
          to have a confirmed way to dismiss the keyboard when desired. -->
     <bool name="config_automotiveHideNavBarForKeyboard">true</bool>
 
+    <!-- Whether the display blanks itself when transitioning from a Doze to a non Doze state -->
+    <bool name="config_displayBlanksAfterDoze">true</bool>
+
 </resources>
