@@ -25,7 +25,8 @@
 #define LEDS            "/sys/class/leds/"
 
 #define LCD_LED         LEDS "lcd-backlight/"
-#define WHITE_LED       LEDS "red/"
+#define WHITE_LED       LEDS "white/"
+#define RED_LED         LEDS "red/"
 
 #define BLINK           "blink"
 #define BRIGHTNESS      "brightness"
@@ -140,9 +141,11 @@ static std::string getScaledRamp(uint32_t brightness) {
 
 static void handleNotification(const LightState& state) {
     uint32_t whiteBrightness = getScaledBrightness(state, getMaxBrightness(WHITE_LED MAX_BRIGHTNESS));
+    uint32_t redBrightness = getScaledBrightness(state, getMaxBrightness(RED_LED MAX_BRIGHTNESS));
 
     /* Disable blinking */
     set(WHITE_LED BLINK, 0);
+    set(RED_LED BLINK, 0);
 
     if (state.flashMode == Flash::TIMED) {
         /*
@@ -168,8 +171,20 @@ static void handleNotification(const LightState& state) {
 
         /* Enable blinking */
         set(WHITE_LED BLINK, 1);
+
+        /* RED */
+        set(RED_LED START_IDX, 0 * RAMP_STEPS);
+        set(RED_LED DUTY_PCTS, getScaledRamp(whiteBrightness));
+        set(RED_LED PAUSE_LO, pauseLo);
+        set(RED_LED PAUSE_HI, pauseHi);
+        set(RED_LED RAMP_STEP_MS, stepDuration);
+
+        /* Enable blinking */
+        set(RED_LED BLINK, 1);
+
     } else {
         set(WHITE_LED BRIGHTNESS, whiteBrightness);
+        set(RED_LED BRIGHTNESS, redBrightness);
     }
 }
 
