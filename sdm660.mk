@@ -265,6 +265,7 @@ PRODUCT_PACKAGES += \
     init.qti.fm.sh \
     init.recovery.qcom.rc \
     init.target.rc \
+    init.performance.sdm660.rc \
     ueventd.qcom.rc
 
 # Ion
@@ -389,7 +390,11 @@ PRODUCT_COPY_FILES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.2-service-qti
+    android.hardware.power@1.3-service.pixel-libperfmgr
+
+# Powerhint
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/configs/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
 
 # Preopt SystemUI
 PRODUCT_DEXPREOPT_SPEED_APPS += SystemUI

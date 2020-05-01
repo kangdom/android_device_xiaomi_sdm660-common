@@ -27,32 +27,11 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-target=`getprop ro.board.platform`
-if [ -f /sys/devices/soc0/soc_id ]; then
-    platformid=`cat /sys/devices/soc0/soc_id`
-else
-    platformid=`cat /sys/devices/system/soc/soc0/id`
-fi
-
-start_msm_irqbalance660()
-{
-	if [ -f /vendor/bin/msm_irqbalance ]; then
-		case "$platformid" in
-		    "317" | "321" | "324" | "325" | "326" | "336" | "345" | "346" | "360" | "393")
-			start vendor.msm_irqbalance;;
-		    "318" | "327" | "385")
-			start vendor.msm_irqbl_sdm630;;
-		esac
-	fi
-}
-
 echo 1 > /proc/sys/net/ipv6/conf/default/accept_ra_defrtr
 
-case "$target" in
-    "sdm660")
-        start_msm_irqbalance660
-        ;;
-esac
+if [ -f /vendor/bin/msm_irqbalance ]; then
+        start vendor.msm_irqbalance
+fi
 
 #
 # Make modem config folder and copy firmware config to that folder for RIL
@@ -78,16 +57,5 @@ fi
 chmod g-w /data/vendor/modem_config
 setprop ro.vendor.ril.mbn_copy_completed 1
 
-#check build variant for printk logging
-#current default minimum boot-time-default
-buildvariant=`getprop ro.build.type`
-case "$buildvariant" in
-    "userdebug" | "eng")
-        #set default loglevel to KERN_INFO
-        echo "6 6 1 7" > /proc/sys/kernel/printk
-        ;;
-    *)
-        #set default loglevel to KERN_WARNING
-        echo "4 4 1 4" > /proc/sys/kernel/printk
-        ;;
-esac
+#set default loglevel to KERN_WARNING
+echo "4 4 1 4" > /proc/sys/kernel/printk
