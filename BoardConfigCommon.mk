@@ -110,7 +110,6 @@ HEALTHD_USE_BATTERY_INFO := true
 
 # Clang
 TARGET_KERNEL_CLANG_COMPILE := true
-TARGET_KERNEL_CLANG_VERSION := r377782c
 
 # CNE and DPM
 BOARD_USES_QCNE := true
@@ -271,6 +270,8 @@ WIFI_DRIVER_OPERSTATE_PATH := "/sys/class/net/wlan0/operstate"
 WIFI_HIDL_FEATURE_DUAL_INTERFACE := true
 WIFI_HIDL_FEATURE_AWARE := true
 WPA_SUPPLICANT_VERSION := VER_0_8_X
+
+BUILD_BROKEN_DUP_RULES := true
 
 # Inherit the proprietary files
 -include vendor/xiaomi/sdm660-common/BoardConfigVendor.mk
